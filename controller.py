@@ -1,6 +1,7 @@
 import text
 import view
 import model
+from text import change_contact
 
 
 def start_app():
@@ -18,21 +19,21 @@ def start_app():
             case 3:
                 view.print_contacts(model.global_phone_book)
             case 4:
-                contact = view.input_contact(text.new_contact)
-                model.add_contact(contact)
-                view.print_message(text.add_contact_successful(contact[0]))
+                contact = model.Contact(contact=view.input_contact(text.new_contact))
+                contact.add_contact()
+                view.print_message(text.add_contact_successful(contact.name))
             case 5:
                 search_word = view.input_data(text.input_search_word)
-                result = model.search_contact(search_word)
+                result = model.Contact.search_contact(search_word)
                 view.print_contacts(result)
             case 6:
                 changed_id = view.input_data(text.input_changed_id)
-                changed_contact = view.input_contact(text.change_contact)
-                name = model.change_contact(changed_id, changed_contact)
-                view.print_message(text.change_contact_successful(name))
+                changed_contact = model.Contact(contact=view.input_contact(text.new_contact))
+                changed_contact.change_contact(cnt_id=changed_id)
+                view.print_message(text.change_contact_successful(changed_contact.name))
             case 7:
                 cnt_id = view.input_data(text.input_delete_id)
-                name = model.delete_contact(cnt_id)
+                name = model.Contact.delete_contact(cnt_id)
                 view.print_message(text.delete_contact_successful(name))
             case 8:
                 start_loop = False
