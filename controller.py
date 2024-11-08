@@ -1,26 +1,27 @@
 import text
 import view
 import model
-from text import change_contact
 
 
 def start_app():
     start_loop = True
+    global_phone_book = model.Phonebook()
     while start_loop:
         view.show_menu()
         user_choice = view.menu_choice()
+        global_phone_book.open_file()
         match user_choice:
             case 1:
-                model.open_file()
+                global_phone_book.open_file()
                 view.print_message(text.open_pb_successful)
             case 2:
-                model.save_file()
+                global_phone_book.save_file()
                 view.print_message(text.save_pb_successful)
             case 3:
                 view.print_contacts(model.global_phone_book)
             case 4:
                 contact = model.Contact(contact=view.input_contact(text.new_contact))
-                contact.add_contact()
+                contact.add_contact(global_phone_book=global_phone_book)
                 view.print_message(text.add_contact_successful(contact.name))
             case 5:
                 search_word = view.input_data(text.input_search_word)
