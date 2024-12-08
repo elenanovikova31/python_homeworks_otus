@@ -1,8 +1,9 @@
+from error_message import ErrorMessage
+
 message_div = '='
 
 main_menu = [
     'Главное меню:',
-    'Открыть справочник',
     'Сохранить справочник',
     'Показать все контакты',
     'Создать контакт',
@@ -40,13 +41,18 @@ def add_contact_successful(name: str):
     return f'Контакт {name} успешно добавлен!'
 
 
-def change_contact_successful(name: str):
-    return f'Контакт {name} успешно изменен!'
+def change_contact_successful(changed_contact):
+    if changed_contact.error is None:
+        return f'Контакт {changed_contact.name} успешно изменен!'
+    else:
+        return changed_contact.error
 
 
-def delete_contact_successful(name: str):
-    return f'Контакт {name} успешно удален!'
-
+def delete_contact_successful(name: str, cnt_id: int):
+    if name != ErrorMessage.CONTACT_NOT_EXISTS:
+        return f'Контакт {name} успешно удален!'
+    else:
+        return name.format(cnt_id)
 
 input_search_word = 'Введите слово для поиска: '
 

@@ -22,12 +22,18 @@ def show_menu():
             print(f'\t{i}. {item}')
 
 
-def print_contacts(book: dict, column_size: int = 20):
-    print('\n' + text.message_div * (3 + column_size * 3))
-    for i, contact in book.items():
-        print(f'{i: >3} {contact.name: <{column_size}} '
+def print_contacts(book, column_size: int = 20):
+    try:
+        assert book != {}
+        print('\n' + text.message_div * (3 + column_size * 3))
+        for i, contact in book.items():
+            print(f'{i: >3} {contact.name: <{column_size}} '
               f'{contact.phone: <{column_size}} {contact.comment: <{column_size}}')
-    print(text.message_div * (3 + column_size * 3), end='\n\n')
+        print(text.message_div * (3 + column_size * 3), end='\n\n')
+    except AssertionError:
+        print(text.message_div * (3 + column_size * 3), end='\n\n')
+        print("Контакт не найден!!!")
+        print(text.message_div * (3 + column_size * 3), end='\n\n')
 
 
 def print_message(msg: str):
